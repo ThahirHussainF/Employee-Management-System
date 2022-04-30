@@ -58,20 +58,25 @@ namespace EmployeeManagementSystem.User
                 return;
             }
             Console.WriteLine("You were not yet mark attendance!");
-            Attendance attendance=new Attendance();
-            records[Storage.TODAY_DATE]=attendance;
-            Console.WriteLine("Did you mark attendance(press 1 for yes,2 for no): ");
+            Console.WriteLine("\n1.Entry In\n2.Entry out\n3.Cancel");
             byte choice = Convert.ToByte(Console.ReadLine());
             if (choice == 1)
             {
+                Attendance attendance=new Attendance();
+                records[Storage.TODAY_DATE]=attendance;
                 attendance.TimeIn=DateTime.Now.ToShortTimeString();
                 attendance.EmployeeId=this.EmployeeId;
+                attendance.Date=Storage.TODAY_DATE;
+                Console.WriteLine("Enter your Signature: ");
+                attendance.Signature=Console.ReadLine();
                 Console.WriteLine("You were marked attendance on {0}", Storage.TODAY_DATE);
                 return;
             }
-            else
+            else if(choice==2)
             {
-                Console.WriteLine("You were not mark attendance!");
+                 Attendance attendance=records[Storage.TODAY_DATE];
+                 attendance.TimeOut=DateTime.Now.ToShortTimeString();
+
             }
 
         }
