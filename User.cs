@@ -22,7 +22,7 @@ namespace EmployeeManagementSystem.User
     //It contains common properties and functionalities among all users(Employee, Manager and Admin)
     public abstract class UserInformation
     {
-       #nullable enable
+#nullable enable
         private String? userName = "undefined";//It stores user name for all users(Employee, Manager and Admin)
         private String? password = "undefined";//It stores password for all users(Employee, Manager and Admin).
         protected static int id = 1;//It is treated as a counter to give unique Id to all employees.
@@ -257,11 +257,15 @@ namespace EmployeeManagementSystem.User
             }
         }
 
-        public bool EmployeeStatus {
-            get{
+        public bool EmployeeStatus
+        {
+            get
+            {
                 return this.employeeStatus;
-            } set{
-                this.employeeStatus=value;
+            }
+            set
+            {
+                this.employeeStatus = value;
             }
         }
 
@@ -274,6 +278,7 @@ namespace EmployeeManagementSystem.User
             Console.WriteLine("User Type: {0}", this.UserRole);
             Console.WriteLine("Designation: {0}", this.Designation);
             Console.WriteLine("Years of Experience: {0}", this.yearsOfExperience);
+            Console.WriteLine("Salary: {0}", this.salary);
             Console.WriteLine("Qualification: {0}", this.qualification);
             Console.WriteLine("Email ID: {0}", this.EmailId);
             Console.WriteLine("Phone Number: {0}", this.PhoneNumber);

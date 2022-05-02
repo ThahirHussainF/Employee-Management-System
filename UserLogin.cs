@@ -44,12 +44,10 @@ namespace EmployeeManagementSystem.Home
                  case "Manager":
                  Manager manager=Storage.managerRecords[userName];
                  manager.ShowDashboard();
-                 //On progress
                  break;
                  case "Admin":
                  Admin admin=Storage.adminRecords[userName];
                  admin.ShowDashboard();
-                 //on progress
                  break;
              }
          }

@@ -17,7 +17,11 @@ namespace EmployeeManagementSystem.User
                 int choice;
                 Console.WriteLine("\n-----------------------------------------------------------------------------");
                 Console.WriteLine("\t\t\tHi, {0}\n", this.EmployeeId);
-                Console.WriteLine("\n1.Update my profile\n2.Check TimeSheet\n3.Check Attendance\n4.print Attendance\n5.Show my profile\n6.Approve Emploee\n7.Logout\nEnter your choice: ");
+                if(this.EmployeeStatus==false) {
+                    Console.WriteLine("You were not approved by admin!");
+                    return;
+                }
+                Console.WriteLine("\n1.Update my profile\n2.Check TimeSheet\n3.Check Attendance\n4.print Attendance\n5.Show my profile\n6.Approve Emploee\n7.Update salary details\n8.Logout\nEnter your choice: ");
                 choice = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("-----------------------------------------------------------------------------");
                 switch (choice)
@@ -46,8 +50,11 @@ namespace EmployeeManagementSystem.User
                     case 6:
                         this.approveEmployee();
                         break;
-                    //Exit
                     case 7:
+                        this.UpdateSalaryDetails();
+                        break;
+                    //Exit
+                    case 8:
                         logOut = false;
                         break;
                 }
@@ -120,6 +127,15 @@ namespace EmployeeManagementSystem.User
 
             }
 
+        }
+        void UpdateSalaryDetails(){
+           Console.WriteLine("Salary Details");
+           foreach(Employee employee in Storage.employeeRecords.Values) {
+               employee.ShowUserDetails();
+               Console.WriteLine("Enter the salary to update: ");
+               employee.Salary=(float)Convert.ToDouble(Console.ReadLine());
+               Console.WriteLine("Salary was updated successfully!");
+           }
         }
 
     }
