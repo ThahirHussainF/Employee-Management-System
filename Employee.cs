@@ -6,13 +6,12 @@ namespace EmployeeManagementSystem.User
     //It contains all employee related details.
     class Employee : UserInformation, IUserFunctions
     {
-        SortedDictionary<String, Attendance> records = new SortedDictionary<string, Attendance>();
         //IT is being invoked whenever new employee was added to database.
         public Employee()
         {
             this.UserRole = UserType.Employee.ToString();
         }
-        public void ShowEmployeeMenu()
+        public void ShowDashboard()
         {
             bool logOut = true;
             do
@@ -50,87 +49,51 @@ namespace EmployeeManagementSystem.User
             } while (logOut);
         }
         //test purpose
-        public void UnderProgress()
+        public void CheckAttendance()
         {
-            if (records.ContainsKey(Storage.TODAY_DATE))
-            {
-                Console.WriteLine("You were already marked attendance at {0}!", Storage.TODAY_DATE);
-                return;
-            }
-            Console.WriteLine("You were not yet mark attendance!");
-            Console.WriteLine("\n1.Entry In\n2.Entry out\n3.Cancel");
+            Console.WriteLine("\n1.Check In\n2.Check out\n3.Cancel");
             byte choice = Convert.ToByte(Console.ReadLine());
             if (choice == 1)
             {
-                Attendance attendance=new Attendance();
-                records[Storage.TODAY_DATE]=attendance;
-                attendance.TimeIn=DateTime.Now.ToShortTimeString();
-                attendance.EmployeeId=this.EmployeeId;
-                attendance.Date=Storage.TODAY_DATE;
-                Console.WriteLine("Enter your Signature: ");
-                attendance.Signature=Console.ReadLine();
-                Console.WriteLine("You were marked attendance on {0}", Storage.TODAY_DATE);
-                return;
-            }
-            else if(choice==2)
-            {
-                 Attendance attendance=records[Storage.TODAY_DATE];
-                 attendance.TimeOut=DateTime.Now.ToShortTimeString();
-
-            }
-
-        }
-        public void CheckAttendance()
-        {
-            if (this.attendanceRecords.ContainsKey(Storage.TODAY_DATE))
-            {
-                Console.WriteLine("You were already marked attendance at {0}!", Storage.TODAY_DATE);
-                return;
-            }
-            else
-            {
-                Console.WriteLine("You were not yet mark attendance!");
-                Console.WriteLine("Did you mark attendance(press 1 for yes,2 for no): ");
-                byte choice = Convert.ToByte(Console.ReadLine());
-                if (choice == 1)
+                if (attendanceRecords.ContainsKey(Storage.TODAY_DATE))
                 {
-                    this.attendanceRecords[Storage.TODAY_DATE] = true;
-                    Console.WriteLine("You were marked attendance on {0}", Storage.TODAY_DATE
-                    );
+                    Console.WriteLine("You were already marked attendance at {0}!", Storage.TODAY_DATE);
                     return;
                 }
-                else
-                {
-                    Console.WriteLine("You were not mark attendance!");
+
+                Attendance attendance = new Attendance();
+                attendanceRecords[Storage.TODAY_DATE] = attendance;
+                attendance.TimeIn = DateTime.Now.ToShortTimeString();
+                attendance.EmployeeId = this.EmployeeId;
+                attendance.Date = Storage.TODAY_DATE;
+                Console.WriteLine("Enter your Signature: ");
+                attendance.Signature = Console.ReadLine();
+                Console.WriteLine("Check In successfully!");
+                return;
+            }
+            else if (choice == 2)
+            {
+                if(!attendanceRecords.ContainsKey(Storage.TODAY_DATE)){
+                    Console.WriteLine("You were not checked In!");
+                    return;
                 }
+                Attendance attendance = attendanceRecords[Storage.TODAY_DATE];
+                attendance.TimeOut = DateTime.Now.ToShortTimeString();
+                attendance.calculateTotalHours();
+                attendance.markAttendanceStatus();
+                Console.WriteLine("Checked out successfully!");
 
             }
 
         }
         public void printAttendance()
         {
-            string option;//It may be PRESENT/ABSENT/NOT YET MARKED
-            Console.WriteLine("\n\n*****************************************************************************\n");
-            Console.WriteLine("Name: {0} \nEmployee Id: {1} \nEmployee Designation: {2}", this.FirstName + " " + this.LastName, this.EmployeeId, this.Designation);
-            Console.WriteLine("\n*****************************************************************************\n");
-            Console.WriteLine("\t\t Date\t\t\tAttendance status\n");
-            if (!this.attendanceRecords.ContainsKey(DateTime.Now.Date.ToShortDateString()))
+            foreach (KeyValuePair<String, Attendance> attendance in attendanceRecords)
             {
-                Console.WriteLine("\t\t{0}\t\t\tNot YET MARKED", DateTime.Now.Date.ToShortDateString());
-                return;
-
+                Console.WriteLine(attendance.Value);
             }
-            foreach (KeyValuePair<String, bool> attendance in this.AttendenceRecords)
-            {
-                option = (attendance.Value == true) ? "PRESENT" : "ABSENT";
-                Console.WriteLine("\t\t{0}\t\t{1}", attendance.Key, option);
-
-            }
-        }
-        //It this used to show the employee details.
-        public void ShowDashboard()
-        {
 
         }
+
     }
 }

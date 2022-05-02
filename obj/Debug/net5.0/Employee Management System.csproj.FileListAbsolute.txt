@@ -1,0 +1,16 @@
+D:\Aspire systems work\Employee Management System\bin\Debug\net5.0\Employee Management System.exe
+D:\Aspire systems work\Employee Management System\bin\Debug\net5.0\Employee Management System.deps.json
+D:\Aspire systems work\Employee Management System\bin\Debug\net5.0\Employee Management System.runtimeconfig.json
+D:\Aspire systems work\Employee Management System\bin\Debug\net5.0\Employee Management System.runtimeconfig.dev.json
+D:\Aspire systems work\Employee Management System\bin\Debug\net5.0\Employee Management System.dll
+D:\Aspire systems work\Employee Management System\bin\Debug\net5.0\ref\Employee Management System.dll
+D:\Aspire systems work\Employee Management System\bin\Debug\net5.0\Employee Management System.pdb
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\Employee Management System.csproj.AssemblyReference.cache
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\Employee Management System.GeneratedMSBuildEditorConfig.editorconfig
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\Employee Management System.AssemblyInfoInputs.cache
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\Employee Management System.AssemblyInfo.cs
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\Employee Management System.csproj.CoreCompileInputs.cache
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\Employee Management System.dll
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\ref\Employee Management System.dll
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\Employee Management System.pdb
+D:\Aspire systems work\Employee Management System\obj\Debug\net5.0\Employee Management System.genruntimeconfig.cache

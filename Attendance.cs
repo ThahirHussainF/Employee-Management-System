@@ -2,15 +2,15 @@ using System;
 using EmployeeManagementSystem.User;
 namespace EmployeeManagementSystem.Database
 {
-    class Attendance
+    public class Attendance
     {
-        private String employeeId=UserType.Undefined.ToString();
-        private String date = "";
-        private String timeIn = "";
-        private String timeOut = "";
-        private byte totalHours;
-        private byte attendanceStatus=0;//0->NOT YET MARKED,1-PRESENT,2-ABSENT
-        private String signature = "";
+        private String employeeId = UserType.Undefined.ToString();
+        private String date = "undefined";
+        private String timeIn = "undefined";
+        private String timeOut = "undefined";
+        private String totalHours="undefined";
+        private String attendanceStatus = "NOT YET MARKED";//NOT YET MARKED,PRESENT,ABSENT
+        private String signature = "undefined";
 
         public String EmployeeId
         {
@@ -56,7 +56,7 @@ namespace EmployeeManagementSystem.Database
                 this.timeOut = value;
             }
         }
-        public byte TotalHours
+        public String TotalHours
         {
             get
             {
@@ -67,12 +67,37 @@ namespace EmployeeManagementSystem.Database
         {
             get
             {
-                return this.Signature;
+                return this.signature;
             }
             set
             {
                 this.signature = value;
             }
+        }
+        public void calculateTotalHours()
+        {
+            DateTime dtFrom = DateTime.Parse(this.timeIn);
+            DateTime dtTo = DateTime.Parse(this.TimeOut);
+            double hours = dtTo.Subtract(dtFrom).Hours;
+            double minutes = dtTo.Subtract(dtFrom).Minutes;
+            this.totalHours=hours+" hours and "+minutes+" minutes";
+
+        }
+        public void markAttendanceStatus() {
+            if(this.attendanceStatus.Equals("NOT YET MARKED")) {
+                 if(Convert.ToInt32(this.totalHours.Substring(0,1))==9) {
+                     this.attendanceStatus="PRESENT";
+                 } else{
+                     this.attendanceStatus="ABSENT";
+                 }
+            }
+            else{
+                Console.WriteLine("Attendance status was already marked!");
+            }
+        }
+
+        public override String ToString() {
+              return "Attendance Details"+"\nEmployee Id: "+this.EmployeeId+"\nDate: "+this.Date+"\nCheck In: "+this.timeIn+"\nCheck out: "+this.timeOut+"\nTotal Working Hours: "+this.totalHours+"\nAttendance status: "+this.attendanceStatus+"\nSignature: "+this.signature;
         }
 
     }

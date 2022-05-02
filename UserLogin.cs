@@ -39,15 +39,16 @@ namespace EmployeeManagementSystem.Home
              switch(user) {
                  case "Employee":
                  Employee employee=Storage.employeeRecords[userName];
-                 employee.ShowEmployeeMenu();
+                 employee.ShowDashboard();
                  break;
                  case "Manager":
                  Manager manager=Storage.managerRecords[userName];
-                 manager.ShowManagerMenu();
+                 manager.ShowDashboard();
                  //On progress
                  break;
                  case "Admin":
                  Admin admin=Storage.adminRecords[userName];
+                 admin.ShowDashboard();
                  //on progress
                  break;
              }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EmployeeManagementSystem.Database;
 //It is used to manage all user details.
 namespace EmployeeManagementSystem.User
 {
@@ -41,7 +42,7 @@ namespace EmployeeManagementSystem.User
         protected byte attendanceCounter=1;//It is used to mark the attendance only once
         private float salary = 0.0F;//It stores salary for all users(Employee, Manager and Admin).
 
-        protected SortedDictionary<String,Boolean> attendanceRecords=new SortedDictionary<String, bool>();//It is used to store attendance records.
+        protected  SortedDictionary<String,Attendance> attendanceRecords=new SortedDictionary<String, Attendance>();//It is used to store attendance records.
 
         //It is invoked whenever new user is created.(user means employee, manager and admin).
         public UserInformation()
@@ -253,12 +254,6 @@ namespace EmployeeManagementSystem.User
             }
         }
 
-        //It is used to get attendance records.
-        public SortedDictionary<String,bool> AttendenceRecords {
-            get {
-                return this.attendanceRecords;
-            }
-        }
         //It is used to show the user details.
         protected void ShowUserDetails()
         {

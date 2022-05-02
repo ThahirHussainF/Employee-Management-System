@@ -9,7 +9,7 @@ namespace EmployeeManagementSystem.User
         public Manager() {
             this.UserRole=UserType.Manager.ToString();
         }
-        public void ShowManagerMenu()
+        public void ShowDashboard()
         {
             bool logOut = true;
             do
@@ -44,14 +44,11 @@ namespace EmployeeManagementSystem.User
         }
         public void CheckTimesheet() {
             foreach(Employee employee in Storage.employeeRecords.Values) {
-                employee.printAttendance();
+            employee.printAttendance();
+            Console.WriteLine("\n*****************************************************************************\n");
             }
 
         }
-        //It is used to show the manager details.
-        public void ShowDashboard()
-        {
 
-        }
     }
 }
