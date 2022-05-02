@@ -22,7 +22,7 @@ namespace EmployeeManagementSystem.User
     //It contains common properties and functionalities among all users(Employee, Manager and Admin)
     public abstract class UserInformation
     {
-#nullable enable
+       #nullable enable
         private String? userName = "undefined";//It stores user name for all users(Employee, Manager and Admin)
         private String? password = "undefined";//It stores password for all users(Employee, Manager and Admin).
         protected static int id = 1;//It is treated as a counter to give unique Id to all employees.
@@ -42,6 +42,8 @@ namespace EmployeeManagementSystem.User
         private String? pincode = "undefined";//It stores pincode for all users(Employee, Manager and Admin).
         protected byte attendanceCounter = 1;//It is used to mark the attendance only once
         private float salary = 0.0F;//It stores salary for all users(Employee, Manager and Admin).
+
+        private bool employeeStatus;//true->active,fasle->inactive
 
         protected SortedDictionary<String, Attendance> attendanceRecords = new SortedDictionary<String, Attendance>();//It is used to store attendance records.
 
@@ -255,8 +257,16 @@ namespace EmployeeManagementSystem.User
             }
         }
 
+        public bool EmployeeStatus {
+            get{
+                return this.employeeStatus;
+            } set{
+                this.employeeStatus=value;
+            }
+        }
+
         //It is used to show the user details.
-        protected void ShowUserDetails()
+        protected internal void ShowUserDetails()
         {
             Console.WriteLine("Employee Id: {0}", this.EmployeeId);
             Console.WriteLine("First name: {0}", this.FirstName);

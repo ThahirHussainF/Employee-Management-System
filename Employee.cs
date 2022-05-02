@@ -6,6 +6,7 @@ namespace EmployeeManagementSystem.User
     //It contains all employee related details.
     class Employee : UserInformation, IUserFunctions
     {
+        private String managerId;
         //IT is being invoked whenever new employee was added to database.
         public Employee()
         {
@@ -19,6 +20,10 @@ namespace EmployeeManagementSystem.User
                 int choice;
                 Console.WriteLine("\n-----------------------------------------------------------------------------");
                 Console.WriteLine("\t\t\tHi, {0}\n", this.EmployeeId);
+                if(this.EmployeeStatus==false) {
+                    Console.WriteLine("You were not approved by manager!");
+                    return;
+                }
                 Console.WriteLine("\n1.Update my profile\n2.Check attendance\n3.Show my profile\n4.print Attendance\n5.Logout\nEnter your choice: ");
                 choice = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("-----------------------------------------------------------------------------");
@@ -47,6 +52,13 @@ namespace EmployeeManagementSystem.User
                 }
 
             } while (logOut);
+        }
+         public String ManagerId {
+            get{
+                return this.managerId;
+            } set {
+                this.managerId=value;
+            }
         }
 
     }
