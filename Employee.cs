@@ -48,52 +48,6 @@ namespace EmployeeManagementSystem.User
 
             } while (logOut);
         }
-        //test purpose
-        public void CheckAttendance()
-        {
-            Console.WriteLine("\n1.Check In\n2.Check out\n3.Cancel");
-            byte choice = Convert.ToByte(Console.ReadLine());
-            if (choice == 1)
-            {
-                if (attendanceRecords.ContainsKey(Storage.TODAY_DATE))
-                {
-                    Console.WriteLine("You were already marked attendance at {0}!", Storage.TODAY_DATE);
-                    return;
-                }
-
-                Attendance attendance = new Attendance();
-                attendanceRecords[Storage.TODAY_DATE] = attendance;
-                attendance.TimeIn = DateTime.Now.ToShortTimeString();
-                attendance.EmployeeId = this.EmployeeId;
-                attendance.Date = Storage.TODAY_DATE;
-                Console.WriteLine("Enter your Signature: ");
-                attendance.Signature = Console.ReadLine();
-                Console.WriteLine("Check In successfully!");
-                return;
-            }
-            else if (choice == 2)
-            {
-                if(!attendanceRecords.ContainsKey(Storage.TODAY_DATE)){
-                    Console.WriteLine("You were not checked In!");
-                    return;
-                }
-                Attendance attendance = attendanceRecords[Storage.TODAY_DATE];
-                attendance.TimeOut = DateTime.Now.ToShortTimeString();
-                attendance.calculateTotalHours();
-                attendance.markAttendanceStatus();
-                Console.WriteLine("Checked out successfully!");
-
-            }
-
-        }
-        public void printAttendance()
-        {
-            foreach (KeyValuePair<String, Attendance> attendance in attendanceRecords)
-            {
-                Console.WriteLine(attendance.Value);
-            }
-
-        }
 
     }
 }

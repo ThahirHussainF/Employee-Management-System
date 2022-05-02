@@ -13,7 +13,8 @@ namespace EmployeeManagementSystem.User
     {
         TRAINEE, SOFTWARE_DEVELOPER, SENIOR_SOFTWARE_DEVELOPER, LEAD, ARCHITECT, MANAGER, SENIOR_MANAGER, CEO
     }
-    public interface IUserFunctions {
+    public interface IUserFunctions
+    {
 
         void ShowDashboard();
 
@@ -21,7 +22,7 @@ namespace EmployeeManagementSystem.User
     //It contains common properties and functionalities among all users(Employee, Manager and Admin)
     public abstract class UserInformation
     {
-        #nullable enable
+#nullable enable
         private String? userName = "undefined";//It stores user name for all users(Employee, Manager and Admin)
         private String? password = "undefined";//It stores password for all users(Employee, Manager and Admin).
         protected static int id = 1;//It is treated as a counter to give unique Id to all employees.
@@ -39,10 +40,10 @@ namespace EmployeeManagementSystem.User
         private String? state = "undefined";//It stores state for all users(Employee, Manager and Admin).
         private String? country = "undefined";//It stores country for all users(Employee, Manager and Admin).
         private String? pincode = "undefined";//It stores pincode for all users(Employee, Manager and Admin).
-        protected byte attendanceCounter=1;//It is used to mark the attendance only once
+        protected byte attendanceCounter = 1;//It is used to mark the attendance only once
         private float salary = 0.0F;//It stores salary for all users(Employee, Manager and Admin).
 
-        protected  SortedDictionary<String,Attendance> attendanceRecords=new SortedDictionary<String, Attendance>();//It is used to store attendance records.
+        protected SortedDictionary<String, Attendance> attendanceRecords = new SortedDictionary<String, Attendance>();//It is used to store attendance records.
 
         //It is invoked whenever new user is created.(user means employee, manager and admin).
         public UserInformation()
@@ -278,7 +279,7 @@ namespace EmployeeManagementSystem.User
             do
             {
                 Console.WriteLine("\n1.First Name\n2.Last Name\n3.Qualification\n4.Years of Experience"
-                +"\n5.Email Id\n6.Phone Number\n7.Address Line\n8.District name\n9.State name\n10.Country name\n11.pincode\n12.Close\nEnter your choice: ");
+                + "\n5.Email Id\n6.Phone Number\n7.Address Line\n8.District name\n9.State name\n10.Country name\n11.pincode\n12.Close\nEnter your choice: ");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
@@ -334,6 +335,55 @@ namespace EmployeeManagementSystem.User
 
         }
 
+        public void CheckAttendance()
+        {
+            Console.WriteLine("\n1.Check In\n2.Check out\n3.Cancel");
+            byte choice = Convert.ToByte(Console.ReadLine());
+            if (choice == 1)
+            {
+                if (attendanceRecords.ContainsKey(Storage.TODAY_DATE))
+                {
+                    Console.WriteLine("You were already marked attendance at {0}!", Storage.TODAY_DATE);
+                    return;
+                }
+
+                Attendance attendance = new Attendance();
+                attendanceRecords[Storage.TODAY_DATE] = attendance;
+                attendance.TimeIn = DateTime.Now.ToShortTimeString();
+                attendance.EmployeeId = this.EmployeeId;
+                attendance.Date = Storage.TODAY_DATE;
+                Console.WriteLine("Enter your Signature: ");
+                attendance.Signature = Console.ReadLine();
+                Console.WriteLine("Check In successfully!");
+                return;
+            }
+            else if (choice == 2)
+            {
+                if (!attendanceRecords.ContainsKey(Storage.TODAY_DATE))
+                {
+                    Console.WriteLine("You were not checked In!");
+                    return;
+                }
+                Attendance attendance = attendanceRecords[Storage.TODAY_DATE];
+                attendance.TimeOut = DateTime.Now.ToShortTimeString();
+                attendance.calculateTotalHours();
+                attendance.markAttendanceStatus();
+                Console.WriteLine("Checked out successfully!");
+
+            }
+
+        }
+        public void printAttendance()
+        {
+            foreach (KeyValuePair<String, Attendance> attendance in attendanceRecords)
+            {
+                Console.WriteLine(attendance.Value);
+            }
+
+        }
+
+
     }
+
 
 }
