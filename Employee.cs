@@ -6,12 +6,13 @@ namespace EmployeeManagementSystem.User
     //It contains all employee related details.
     class Employee : UserInformation, IUserFunctions
     {
-        private String managerId;
+        private String managerId="undefined";//It stores respective manager Id.
         //IT is being invoked whenever new employee was added to database.
         public Employee()
         {
             this.UserRole = UserType.Employee.ToString();
         }
+        //It is used to show the dashboard.
         public void ShowDashboard()
         {
             bool logOut = true;
@@ -53,6 +54,7 @@ namespace EmployeeManagementSystem.User
 
             } while (logOut);
         }
+        //It is used to get and set the manager Id.
          public String ManagerId {
             get{
                 return this.managerId;

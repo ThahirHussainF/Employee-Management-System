@@ -9,6 +9,7 @@ namespace EmployeeManagementSystem.User
         {
             this.UserRole = UserType.Manager.ToString();
         }
+        //It is used to show dashboard.
         public void ShowDashboard()
         {
             bool logOut = true;
@@ -17,7 +18,8 @@ namespace EmployeeManagementSystem.User
                 int choice;
                 Console.WriteLine("\n-----------------------------------------------------------------------------");
                 Console.WriteLine("\t\t\tHi, {0}\n", this.EmployeeId);
-                if(this.EmployeeStatus==false) {
+                if (this.EmployeeStatus == false)
+                {
                     Console.WriteLine("You were not approved by admin!");
                     return;
                 }
@@ -50,6 +52,7 @@ namespace EmployeeManagementSystem.User
                     case 6:
                         this.approveEmployee();
                         break;
+                    //Update salary details    
                     case 7:
                         this.UpdateSalaryDetails();
                         break;
@@ -61,81 +64,147 @@ namespace EmployeeManagementSystem.User
 
             } while (logOut);
         }
+        //It is used to Check the timesheet.
         public void CheckTimesheet()
         {
             foreach (Employee employee in Storage.employeeRecords.Values)
             {
-                employee.printAttendance();
-                Console.WriteLine("\n*****************************************************************************\n");
+                if (employee.ManagerId.Equals(this.EmployeeId))
+                {
+                    employee.printAttendance();
+                    Console.WriteLine("\n*****************************************************************************\n");
+                }
+
             }
 
         }
+        //It is used to approve employee.
         public void approveEmployee()
         {
             foreach (Employee employee in Storage.employeeRecords.Values)
             {
-                employee.ShowUserDetails();
-                Console.WriteLine("\n*****************************************************************************\n");
-                Console.WriteLine("\n1.Approv\n2.Deny\nEnter your choice: ");
-                int choice = Convert.ToInt32(Console.ReadLine());
-                if (choice == 1)
+
+                if (employee.ManagerId.Equals(this.EmployeeId))
                 {
-                    employee.EmployeeStatus = true;
-                    Console.WriteLine("You was approved employee!");
-                    employee.ManagerId=this.EmployeeId;
-                    return;
+                    employee.ShowUserDetails();
+                    Console.WriteLine("\n*****************************************************************************\n");
+                    Console.WriteLine("\n1.Approve\n2.Deny\nEnter your choice: ");
+                    int choice = Convert.ToInt32(Console.ReadLine());
+                    if (choice == 1)
+                    {
+                        employee.EmployeeStatus = true;
+                        Console.WriteLine("Approved successfully!");
+                        employee.ManagerId = this.EmployeeId;
+                        allocateDomain();
+                        return;
+                    }
+                    Console.WriteLine("Denied successfully!");
                 }
-                Console.WriteLine("You was denied employee!");
+
+
 
             }
 
         }
+        //It is used to assign role.
         public void AssignRole()
         {
             foreach (Employee employee in Storage.employeeRecords.Values)
             {
-                employee.ShowUserDetails();
-                Console.WriteLine("\n*****************************************************************************\n");
-                Console.WriteLine("****Roles Available****\n1.TRAINEE\n2.SOFTWARE_DEVELOPER\n3.SENIOR_SOFTWARE_DEVELOPER\n4.LEAD\n5.ARCHITECT");
-                Console.WriteLine("Enter your choice: ");
-                int choice = Convert.ToInt32(Console.ReadLine());
-                switch (choice)
+                if (employee.ManagerId.Equals(this.EmployeeId))
                 {
-                    case 1:
-                        employee.Designation = DesignationType.TRAINEE.ToString();
-                        break;
-                    case 2:
-                        employee.Designation = DesignationType.SOFTWARE_DEVELOPER.ToString();
+                    employee.ShowUserDetails();
+                    Console.WriteLine("\n*****************************************************************************\n");
+                    Console.WriteLine("****Roles Available****\n1.TRAINEE\n2.SOFTWARE_DEVELOPER\n3.SENIOR_SOFTWARE_DEVELOPER\n4.LEAD\n5.ARCHITECT");
+                    Console.WriteLine("Enter your choice: ");
+                    int choice = Convert.ToInt32(Console.ReadLine());
+                    switch (choice)
+                    {
+                        case 1:
+                            employee.Designation = DesignationType.TRAINEE.ToString();
+                            break;
+                        case 2:
+                            employee.Designation = DesignationType.SOFTWARE_DEVELOPER.ToString();
 
-                        break;
-                    case 3:
-                        employee.Designation = DesignationType.SENIOR_SOFTWARE_DEVELOPER.ToString();
+                            break;
+                        case 3:
+                            employee.Designation = DesignationType.SENIOR_SOFTWARE_DEVELOPER.ToString();
 
-                        break;
-                    case 4:
-                        employee.Designation = DesignationType.LEAD.ToString();
+                            break;
+                        case 4:
+                            employee.Designation = DesignationType.LEAD.ToString();
 
-                        break;
-                    case 5:
-                        employee.Designation = DesignationType.ARCHITECT.ToString();
+                            break;
+                        case 5:
+                            employee.Designation = DesignationType.ARCHITECT.ToString();
 
-                        break;
+                            break;
+
+                    }
+                    Console.WriteLine("Designation was updated successfully!");
 
                 }
-                Console.WriteLine("Designation was updated sucessfully!");
 
 
             }
 
         }
-        void UpdateSalaryDetails(){
-           Console.WriteLine("Salary Details");
-           foreach(Employee employee in Storage.employeeRecords.Values) {
-               employee.ShowUserDetails();
-               Console.WriteLine("Enter the salary to update: ");
-               employee.Salary=(float)Convert.ToDouble(Console.ReadLine());
-               Console.WriteLine("Salary was updated successfully!");
-           }
+        //It is used to update the salary details.
+        void UpdateSalaryDetails()
+        {
+            Console.WriteLine("Salary Details");
+            foreach (Employee employee in Storage.employeeRecords.Values)
+            {
+                if (employee.ManagerId.Equals(this.EmployeeId))
+                {
+                    employee.ShowUserDetails();
+                    Console.WriteLine("Enter the salary to update: ");
+                    employee.Salary = (float)Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine("Salary was updated successfully!");
+                }
+
+            }
+        }
+        //It is used to allocate the domain.
+        void allocateDomain()
+        {
+            Console.WriteLine("Domain Allocation");
+            foreach (Employee employee in Storage.employeeRecords.Values)
+            {
+                employee.ShowUserDetails();
+                Console.WriteLine("\n1.JAVA\n2.DOTNET\n3.PYTHON\n4.IAS\n5.BFS\n6.ORACLE\nEnter the choice: ");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    //JAVA
+                    case 1:
+                        employee.DomainName = Domain.JAVA.ToString();
+                        break;
+                    //DOTNET    
+                    case 2:
+                        employee.DomainName = Domain.DOTNET.ToString();
+                        break;
+                    //PYTHON    
+                    case 3:
+                        employee.DomainName = Domain.PYTHON.ToString();
+                        break;
+                    //IAS    
+                    case 4:
+                        employee.DomainName = Domain.IAS.ToString();
+                        break;
+                    //BFS    
+                    case 5:
+                        employee.DomainName = Domain.BFS.ToString();
+                        break;
+                    //ORACLE    
+                    case 6:
+                        employee.DomainName = Domain.ORACLE.ToString();
+                        break;
+
+                }
+
+                Console.WriteLine("Domain was allocated successfully!");
+            }
         }
 
     }

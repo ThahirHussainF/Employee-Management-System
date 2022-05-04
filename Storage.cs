@@ -29,6 +29,7 @@ namespace EmployeeManagementSystem.Database
                 Console.WriteLine("Account was  created successfully!\n\nYour {0} Id was {1}.", user,manager.EmployeeId);
             }
         }
+        
         public static void addAdmin() {
             Admin admin=new Admin();
             admin.UserName="Thahir14";

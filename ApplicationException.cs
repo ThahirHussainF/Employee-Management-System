@@ -1,4 +1,5 @@
 using System;
+//It is used to handle Invalid username whenever user types.
 namespace EmployeeManagementSystem.ApplicationException
 {
     class InValidUserNameFormatException : Exception
@@ -8,6 +9,8 @@ namespace EmployeeManagementSystem.ApplicationException
 
         }
     }
+    //It is used to handle Invalid passoword whenever user types.
+
     class InValidPasswordFormatException : Exception
     {
         public InValidPasswordFormatException() : base("Your password was not correct format.Try Again!")

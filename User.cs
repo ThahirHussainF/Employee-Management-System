@@ -42,8 +42,9 @@ namespace EmployeeManagementSystem.User
         private String? pincode = "undefined";//It stores pincode for all users(Employee, Manager and Admin).
         protected byte attendanceCounter = 1;//It is used to mark the attendance only once
         private float salary = 0.0F;//It stores salary for all users(Employee, Manager and Admin).
+        private String domainName="undefined";//It stores domain name.
 
-        private bool employeeStatus;//true->active,fasle->inactive
+        private bool employeeStatus;//true->active,false->inactive
 
         protected SortedDictionary<String, Attendance> attendanceRecords = new SortedDictionary<String, Attendance>();//It is used to store attendance records.
 
@@ -256,7 +257,7 @@ namespace EmployeeManagementSystem.User
                 this.salary = value;
             }
         }
-
+        //It is used to get and set the employee status
         public bool EmployeeStatus
         {
             get
@@ -268,6 +269,14 @@ namespace EmployeeManagementSystem.User
                 this.employeeStatus = value;
             }
         }
+        //It is used to get and set the domain name.
+        public String DomainName {
+            get {
+                return this.domainName;
+            } set {
+                this.domainName=value;
+            }
+        }
 
         //It is used to show the user details.
         protected internal void ShowUserDetails()
@@ -277,6 +286,7 @@ namespace EmployeeManagementSystem.User
             Console.WriteLine("Last name: {0}", this.LastName);
             Console.WriteLine("User Type: {0}", this.UserRole);
             Console.WriteLine("Designation: {0}", this.Designation);
+            Console.WriteLine("Domain Name: {0}", this.DomainName);
             Console.WriteLine("Years of Experience: {0}", this.yearsOfExperience);
             Console.WriteLine("Salary: {0}", this.salary);
             Console.WriteLine("Qualification: {0}", this.qualification);
@@ -288,7 +298,7 @@ namespace EmployeeManagementSystem.User
             Console.WriteLine("Country: {0}", this.Country);
             Console.WriteLine("Pincode: {0}", this.Pincode);
         }
-
+        //It is used to edit the user details.
         protected void EditUserDetails()
         {
             do
@@ -349,7 +359,7 @@ namespace EmployeeManagementSystem.User
             } while (true);
 
         }
-
+        //It is used to check the attendance
         public void CheckAttendance()
         {
             Console.WriteLine("\n1.Check In\n2.Check out\n3.Cancel");
@@ -368,7 +378,7 @@ namespace EmployeeManagementSystem.User
                 attendance.EmployeeId = this.EmployeeId;
                 attendance.Date = Storage.TODAY_DATE;
                 Console.WriteLine("Enter your Signature: ");
-                attendance.Signature = Console.ReadLine();
+                attendance.Signature = Console.ReadLine()??"undefined";
                 Console.WriteLine("Check In successfully!");
                 return;
             }
@@ -388,6 +398,7 @@ namespace EmployeeManagementSystem.User
             }
 
         }
+        //It is used to print the attendance.
         public void printAttendance()
         {
             foreach (KeyValuePair<String, Attendance> attendance in attendanceRecords)

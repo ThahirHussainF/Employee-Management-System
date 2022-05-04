@@ -3,6 +3,12 @@ using EmployeeManagementSystem.Database;
 using EmployeeManagementSystem.User;
 namespace EmployeeManagementSystem.User
 {
+
+    //It contains all domains.
+    enum Domain
+    {
+        JAVA, DOTNET, PYTHON, IAS, BFS, ORACLE
+    }
     //It is used to perform all admin related operations.
     class Admin : UserInformation, IUserFunctions
     {
@@ -24,20 +30,27 @@ namespace EmployeeManagementSystem.User
                 choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
+                    //Print employees
                     case 1:
                         this.PrintEmployees();
                         break;
+                    //Print managers    
                     case 2:
                         this.PrintManagers();
                         break;
+                    //Approve or deny manager    
                     case 3:
                         this.approveManager();
                         break;
+                    //Assign role to manager    
                     case 4:
                         this.AssignRole();
                         break;
+                    //Update the salary details    
                     case 5:
+                        this.UpdateSalaryDetails();
                         break;
+                    //Exit    
                     case 6:
                         logOut = false;
                         break;
@@ -45,6 +58,7 @@ namespace EmployeeManagementSystem.User
             } while (logOut);
 
         }
+        //It is used to print employees
         void PrintEmployees()
         {
             Console.WriteLine("Employee Details");
@@ -53,6 +67,7 @@ namespace EmployeeManagementSystem.User
                 employee.ShowUserDetails();
             }
         }
+        //It is used to print managers
         void PrintManagers()
         {
             Console.WriteLine("Manager Details");
@@ -61,26 +76,28 @@ namespace EmployeeManagementSystem.User
                 manager.ShowUserDetails();
             }
         }
-
+        //It is used to approve managers
         public void approveManager()
         {
             foreach (Manager manager in Storage.managerRecords.Values)
             {
                 manager.ShowUserDetails();
                 Console.WriteLine("\n*****************************************************************************\n");
-                Console.WriteLine("\n1.Approv\n2.Deny\nEnter your choice: ");
+                Console.WriteLine("\n1.Approve\n2.Deny\nEnter your choice: ");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 if (choice == 1)
                 {
                     manager.EmployeeStatus = true;
-                    Console.WriteLine("You was approved  by admin!");
+                    Console.WriteLine("Approved successfully!");
+                    this.allocateDomain();
                     return;
                 }
-                Console.WriteLine("You was denied by admin!");
+                Console.WriteLine("Denied successfully!");
 
             }
 
         }
+        //It is used to assign role.
         public void AssignRole()
         {
             foreach (Manager manager in Storage.managerRecords.Values)
@@ -103,10 +120,10 @@ namespace EmployeeManagementSystem.User
                         break;
 
                 }
-                Console.WriteLine("Designation was updated sucessfully!");
+                Console.WriteLine("Designation was updated successfully!");
             }
         }
-
+        //It is used to update salary details.
         void UpdateSalaryDetails()
         {
             Console.WriteLine("Salary Details");
@@ -116,6 +133,41 @@ namespace EmployeeManagementSystem.User
                 Console.WriteLine("Enter the salary to update: ");
                 manager.Salary = (float)Convert.ToDouble(Console.ReadLine());
                 Console.WriteLine("Salary was updated successfully!");
+            }
+        }
+        //It is used to allocate domain.
+        void allocateDomain()
+        {
+            Console.WriteLine("Domain Allocation");
+            foreach (Manager manager in Storage.managerRecords.Values)
+            {
+                manager.ShowUserDetails();
+                Console.WriteLine("\n1.JAVA\n2.DOTNET\n3.PYTHON\n4.IAS\n5.BFS\n6.ORACLE\nEnter the choice: ");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        manager.DomainName = Domain.JAVA.ToString();
+                        break;
+                    case 2:
+                        manager.DomainName = Domain.DOTNET.ToString();
+                        break;
+                    case 3:
+                        manager.DomainName = Domain.PYTHON.ToString();
+                        break;
+                    case 4:
+                        manager.DomainName = Domain.IAS.ToString();
+                        break;
+                    case 5:
+                        manager.DomainName = Domain.BFS.ToString();
+                        break;
+                    case 6:
+                        manager.DomainName = Domain.ORACLE.ToString();
+                        break;
+
+                }
+
+                Console.WriteLine("Domain was allocated successfully!");
             }
         }
 
